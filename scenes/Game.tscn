@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://sprites/Pollito_Cuerpo.png" type="Texture" id=1]
+[ext_resource path="res://sprites/Pollito_Cabeza.png" type="Texture" id=2]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[node name="Game" type="Node2D"]
+
+[node name="Arena" type="StaticBody2D" parent="."]
+position = Vector2( 512, 300 )
+collision_mask = 0
+physics_material_override = SubResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Arena"]
+build_mode = 1
+polygon = PoolVector2Array( 38, -241.9, 38, -240.7, 84, -230.6, 84, -229.3, 128, -210.3, 128, -209, 167, -182, 167, -180.9, 203, -142.8, 203, -140.6, 218, -119.6, 218, -117.6, 231, -93.5, 231, -90.3, 246, -44.3, 246, -38, 250, -13.2, 250, 20, 248.8, 20, 244.8, 56, 243.5, 56, 234.5, 90, 233.4, 90, 222.3, 117, 221.1, 117, 202.1, 149, 201, 149, 190, 164, 188.8, 164, 158.8, 194, 156.7, 194, 131.7, 213, 129.6, 213, 100.5, 229, 97.3, 229, 76.4, 238, 72.1, 238, 36.2, 247, -38, 247, -38, 245.7, -71, 239.7, -71, 238.5, -102, 228.5, -102, 227.3, -133, 212.3, -133, 211, -167, 187, -167, 185.8, -191, 162.9, -191, 160.7, -210, 137.7, -210, 135.5, -226, 109.6, -226, 106.3, -241, 70.4, -241, 66.4, -249, 29.2, -249, 18, -250, -15, -248.8, -15, -244.8, -51, -243.5, -51, -234.5, -85, -233.4, -85, -222.3, -112, -221.1, -112, -199.1, -148, -197.9, -148, -165.9, -183, -163.7, -183, -146.8, -198, -144.6, -198, -115.6, -217, -113.4, -217, -82.4, -231, -79.3, -231, -48.3, -240, -42.2, -240, -18, -242.8, -18, -244.1 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+position = Vector2( 208, 188 )
+collision_layer = 2
+collision_mask = 5
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="KinematicBody2D"]
+scale = Vector2( 4, 4 )
+frames = SubResource( 4 )
+frame = 1
+playing = true
+
+[node name="Pollito_Cabeza" type="Sprite" parent="KinematicBody2D"]
+position = Vector2( 0, -51 )
+rotation = -1.5708
+scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )

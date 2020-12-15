@@ -7,7 +7,7 @@ var velocity = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	pass
 
 func get_input():
 	velocity = Vector2()
@@ -25,18 +25,23 @@ func _physics_process(delta):
 	get_input()
 	move_and_collide(velocity * delta)
 
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		var head_pos = $Cabeza.global_position
 		var rads = atan2(event.position.y - head_pos.y, event.position.x - head_pos.x)
+		var inverse_self = self.rotation - PI
+		if inverse_self > PI:
+			inverse_self -= 2*PI
+		elif inverse_self < -PI:
+			inverse_self += 2*PI
 		print(rads)
+		print($Cabeza.rotation)
 		print(self.rotation)
-		print(self.rotation + (PI * -1))
-		if rads < self.rotation && rads > self.rotation + PI * -1:
-			$Cabeza.rotation = rads
-			$Cabeza.rotate(90 * PI/180)
-		elif rads < self.rotation:
+		print(inverse_self)
+		if (self.rotation >= 0 && rads < self.rotation && rads > inverse_self) || (self.rotation < 0 && rads < self.rotation && rads < inverse_self):
+			$Cabeza.rotation = rads + (90 * PI/180) - self.rotation
+		elif $Cabeza.rotation > 0:
 			self.rotation = rads
-		elif rads > self.rotation + PI * -1:
-			self.rotation = rads
-			self.rotate(PI * -1)
+		elif $Cabeza.rotation < 0:
+			self.rotation = rads - PI

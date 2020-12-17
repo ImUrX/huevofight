@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostButton" type="Button" parent="Start"]
+margin_left = 517.274
+margin_top = 269.138
+margin_right = 559.274
+margin_bottom = 289.138
+text = "Host"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConnectButton" type="Button" parent="Start"]
+margin_left = 507.463
+margin_top = 295.949
+margin_right = 571.463
+margin_bottom = 315.949
+text = "Connect"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPInput" type="LineEdit" parent="Start/ConnectButton"]
+margin_left = -179.0
+margin_top = -2.22723
+margin_right = -10.0
+margin_bottom = 21.7728
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Start/ConnectButton/IPInput"]
+margin_left = -46.9639
+margin_top = 3.8924
+margin_right = 2.0361
+margin_bottom = 21.8924
+text = "Secret:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ErrorDiag" type="AcceptDialog" parent="Start"]
+margin_right = 83.0
+margin_bottom = 58.0
+
+[node name="Lobby" type="Control" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="List" type="Label" parent="Lobby"]
+margin_left = 484.499
+margin_top = 213.706
+margin_right = 599.499
+margin_bottom = 227.706
+text = "Gente Conectada:"
+align = 1
+valign = 1
+
+[node name="IP" type="Label" parent="Lobby"]
+margin_left = 483.661
+margin_top = 191.896
+margin_right = 523.661
+margin_bottom = 205.896
+text = "IP:"
+[connection signal="pressed" from="Start/HostButton" to="." method="_on_HostButton_pressed"]

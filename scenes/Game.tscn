@@ -1,46 +1,19 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://sprites/Pollito_Cuerpo.png" type="Texture" id=1]
-[ext_resource path="res://sprites/Pollito_Cabeza.png" type="Texture" id=2]
-[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/Semilla.png" type="Texture" id=4]
 
-[sub_resource type="PhysicsMaterial" id=7]
+[sub_resource type="PhysicsMaterial" id=1]
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 128.224, 40.4478 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=4]
-animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 2.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 26 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 4, 4 )
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 4, 4 )
 
 [node name="Game" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 622.035, 363.076 )
 collision_mask = 2
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
 margin_left = -123.054
@@ -54,62 +27,10 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 visible = false
 position = Vector2( 5, 0 )
-shape = SubResource( 8 )
+shape = SubResource( 2 )
 
 [node name="Semilla" type="Sprite" parent="."]
 position = Vector2( 290.854, 130.23 )
 texture = ExtResource( 4 )
 
-[node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 434.981, 197.192 )
-collision_layer = 2
-script = ExtResource( 3 )
-
-[node name="Cuerpo" type="AnimatedSprite" parent="Player"]
-scale = Vector2( 4, 4 )
-frames = SubResource( 4 )
-playing = true
-
-[node name="ColisionCuerpo" type="CollisionShape2D" parent="Player"]
-visible = false
-position = Vector2( 0, 6 )
-shape = SubResource( 1 )
-
-[node name="Cabeza" type="Area2D" parent="Player"]
-position = Vector2( 0, -32 )
-input_pickable = false
-gravity_vec = Vector2( 0, 0 )
-gravity = 0.0
-collision_layer = 16
-collision_mask = 32
-
-[node name="Sprite" type="Sprite" parent="Player/Cabeza"]
-scale = Vector2( 4, 4 )
-texture = ExtResource( 2 )
-
-[node name="Pico" type="Area2D" parent="Player/Cabeza"]
-input_pickable = false
-collision_layer = 4
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Cabeza/Pico"]
-visible = false
-position = Vector2( 0, -32 )
-shape = SubResource( 5 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/Cabeza"]
-visible = false
-scale = Vector2( 4, 4 )
-polygon = PoolVector2Array( 2, -5, 3, -5, 3, -4, 4, -4, 4, -3, 5, -3, 5, -2, 6, -2, 6, 2, 5, 2, 5, 3, 4, 3, 4, 4, 3, 4, 3, 5, -3, 5, -3, 4, -4, 4, -4, 3, -5, 3, -5, 2, -6, 2, -6, -2, -5, -2, -5, -3, -4, -3, -4, -4, -3, -4, -3, -5, -2, -5 )
-
-[node name="Culo" type="Area2D" parent="Player"]
-input_pickable = false
-gravity_vec = Vector2( 0, 0 )
-gravity = 0.0
-collision_layer = 8
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Culo"]
-visible = false
-position = Vector2( 0, 28 )
-shape = SubResource( 6 )
+[node name="Player" parent="." instance=ExtResource( 1 )]

@@ -41,6 +41,7 @@ remote func register_player(info):
 
 remotesync func pre_configure_game():
 	get_tree().set_pause(true)
+	visible = false
 	var selfPeerID = get_tree().get_network_unique_id()
 
 	# Load world
@@ -72,7 +73,7 @@ remote func done_preconfiguring():
 	if players_done.size() == players_info.size():
 		rpc("post_configure_game")
 
-remote func post_configure_game():
+remotesync func post_configure_game():
 	# Only the server is allowed to tell a client to unpause
 	if 1 == get_tree().get_rpc_sender_id():
 		get_tree().set_pause(false)

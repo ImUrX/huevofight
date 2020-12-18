@@ -28,11 +28,14 @@ func get_input(delta):
 		else:
 			self.rotation = lerp_angle(self.rotation, rads_calc, elapsed_move/rotation_weight)
 		velocity = Vector2(cos(rads), sin(rads)) * speed
+		rpc_unreliable("set_rots", self.rotation, $Cabeza.rotation)
 	else:
 		elapsed_move = .0
+	rpc_unreliable("set_pos_and_vel", position, velocity)
 
 func _physics_process(delta):
-	get_input(delta)
+	if is_network_master():
+		get_input(delta)
 	move_and_collide(velocity * delta)
 
 func inside_pi(input):
@@ -42,7 +45,16 @@ func inside_pi(input):
 		input += 2*PI
 	return input
 
+puppet func set_pos_and_vel(pos, vel):
+	position = pos
+	velocity = vel
+
+puppet func set_rots(body, head):
+	$Cabeza.rotation = head
+	rotation = body
+
 func _process(delta):
+	if !is_network_master(): return
 	var mouse = get_global_mouse_position()
 	var head_pos = $Cabeza.global_position
 	var rads = atan2(mouse.y - head_pos.y, mouse.x - head_pos.x)
@@ -54,3 +66,4 @@ func _process(delta):
 			self.rotation = lerp_angle(self.rotation, rads, body_speed)
 		elif $Cabeza.rotation < 0:
 			self.rotation = lerp_angle(self.rotation, inside_pi(rads - PI), body_speed)
+	rpc_unreliable("set_rots", self.rotation, $Cabeza.rotation)

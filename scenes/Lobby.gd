@@ -39,7 +39,7 @@ remote func register_player(info):
 	players_info[id] = info
 	show_players()
 
-remote func pre_configure_game():
+remotesync func pre_configure_game():
 	get_tree().set_pause(true)
 	var selfPeerID = get_tree().get_network_unique_id()
 
@@ -86,4 +86,4 @@ func show_players():
 
 func _on_StartButton_pressed():
 	client.seal_lobby()
-	
+	rpc("pre_configure_game")

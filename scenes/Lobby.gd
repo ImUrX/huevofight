@@ -51,14 +51,14 @@ remotesync func pre_configure_game():
 	var my_player = preload("res://scenes/Player.tscn").instance()
 	my_player.set_name(str(selfPeerID))
 	my_player.set_network_master(selfPeerID) # Will be explained later
-	get_node("/root/world/players").add_child(my_player)
+	get_node("/root/Game/Players").add_child(my_player)
 
 	# Load other players
 	for p in players_info:
 		var player = preload("res://scenes/Player.tscn").instance()
 		player.set_name(str(p))
 		player.set_network_master(p) # Will be explained later
-		get_node("/root/world/players").add_child(player)
+		get_node("/root/Game/Players").add_child(player)
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.

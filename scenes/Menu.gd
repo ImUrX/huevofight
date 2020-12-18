@@ -49,6 +49,3 @@ func _on_Client_disconnected():
 	if $Client.code >= 4000:
 		$ErrorDiag.dialog_text = $Client.reason
 		$ErrorDiag.popup_centered()
-
-func _on_StartButton_pressed():
-	$Client.seal_lobby()

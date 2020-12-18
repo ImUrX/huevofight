@@ -4,6 +4,7 @@ extends Control
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+onready var client = get_node("../Client")
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -38,8 +39,51 @@ remote func register_player(info):
 	players_info[id] = info
 	show_players()
 
+remote func pre_configure_game():
+	get_tree().set_pause(true)
+	var selfPeerID = get_tree().get_network_unique_id()
+
+	# Load world
+	var world = load("res://scenes/Game.tscn").instance()
+	get_node("/root").add_child(world)
+
+	# Load my player
+	var my_player = preload("res://scenes/Player.tscn").instance()
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	get_node("/root/world/players").add_child(my_player)
+
+	# Load other players
+	for p in players_info:
+		var player = preload("res://scenes/Player.tscn").instance()
+		player.set_name(str(p))
+		player.set_network_master(p) # Will be explained later
+		get_node("/root/world/players").add_child(player)
+
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
+	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	rpc_id(1, "done_preconfiguring")
+
+var players_done = []
+remote func done_preconfiguring():
+	var who = get_tree().get_rpc_sender_id()
+	players_done.append(who)
+
+	if players_done.size() == players_info.size():
+		rpc("post_configure_game")
+
+remote func post_configure_game():
+	# Only the server is allowed to tell a client to unpause
+	if 1 == get_tree().get_rpc_sender_id():
+		get_tree().set_pause(false)
+		# Game starts now!
+
 func show_players():
 	$List.text = "Connected people:"
 	$List.text += "\n%s" % own_info["name"]
 	for id in players_info:
 		$List.text += "\n%s" % players_info[id]["name"]
+
+func _on_StartButton_pressed():
+	client.seal_lobby()
+	

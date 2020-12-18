@@ -41,5 +41,5 @@ remote func register_player(info):
 func show_players():
 	$List.text = "Connected people:"
 	$List.text += "\n%s" % own_info["name"]
-	for player in players_info:
-		$List.text += "\n%s" % player["name"]
+	for id in players_info:
+		$List.text += "\n%s" % players_info[id]["name"]

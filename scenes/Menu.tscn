@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Menu.gd" type="Script" id=1]
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -37,7 +37,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IPInput" type="LineEdit" parent="Start/ConnectButton"]
+[node name="SecretInput" type="LineEdit" parent="Start/ConnectButton"]
 margin_left = -179.0
 margin_top = -2.22723
 margin_right = -10.0
@@ -46,7 +46,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Start/ConnectButton/IPInput"]
+[node name="Label" type="Label" parent="Start/ConnectButton/SecretInput"]
 margin_left = -46.9639
 margin_top = 3.8924
 margin_right = 2.0361
@@ -82,4 +82,3 @@ margin_top = 191.896
 margin_right = 523.661
 margin_bottom = 205.896
 text = "IP:"
-[connection signal="pressed" from="Start/HostButton" to="." method="_on_HostButton_pressed"]

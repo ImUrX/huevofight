@@ -1,4 +1,4 @@
-const ws = require("ws");
+const WebSocket = require("ws");
 const crypto = require("crypto");
 /* 
     absolutely not based on https://github.com/godotengine/godot-demo-projects/blob/master/networking/webrtc_signaling/server_node/server.js

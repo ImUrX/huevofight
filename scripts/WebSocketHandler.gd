@@ -1,9 +1,8 @@
-extends Control
-
+extends Node
+#yes, this is from the example too https://github.com/godotengine/godot-demo-projects/blob/master/networking/webrtc_signaling/client/ws_webrtc_client.gd
 var _client = WebSocketClient.new()
 var code = 1000
 var reason = "Unknown"
-
 var lobby = ""
 
 signal lobby_joined(lobby)
